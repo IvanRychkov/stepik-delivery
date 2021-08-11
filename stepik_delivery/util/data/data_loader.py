@@ -14,7 +14,7 @@ def load_csv(data, tablename):
         # Пробуем загрузить данные в таблицу
         data.to_sql(tablename, con=db.engine, if_exists='append')
         db.session.commit()
-    except IntegrityError:
+    except:
         # Если нарушен констрейнт уникальности, отменяем операцию
         db.session.rollback()
 

@@ -16,14 +16,15 @@ app.config.from_object(Config)
 with app.app_context():
     db.init_app(app)
 
+    # Подключаем миграции
     migrate = Migrate(app, db)
-
 
     # Админка
     admin = Admin(app)
 
     # from stepik_delivery.views import *
 
+    # Подключаем модули-блюпринты
     app.register_blueprint(market)
     app.register_blueprint(auth)
 
