@@ -1,11 +1,10 @@
 from flask import Flask
 from flask_admin import Admin
 
-from stepik_delivery.config import Config
-from stepik_delivery.models import db
-from stepik_delivery.market import market
 from stepik_delivery.auth import auth
-
+from stepik_delivery.config import Config
+from stepik_delivery.market import market
+from stepik_delivery.models import db
 
 # Создание приложения
 app = Flask(__name__)
