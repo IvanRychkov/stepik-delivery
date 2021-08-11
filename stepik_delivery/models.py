@@ -1,4 +1,3 @@
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -8,20 +7,47 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    password_hash = db.Column(db.String(128))
-
-    @property
-    def password(self):
-        return None
-
-    @password.setter
-    def password(self, password):
-        self.password_hash = generate_password_hash(str(password))
-
-    def validate_password(self, password):
-        return check_password_hash(self.password_hash, str(password))
+    mail = db.Column(db.String(), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
 
 
-u = User()
-u.password = 13
-print(u.validate_password(10))
+orders_meals = db.Table('orders_meals',
+    db.Column('meal_id', db.Integer, db.ForeignKey('meals.id'), primary_key=True),
+    db.Column('order_id', db.Integer, db.ForeignKey('orders.id'), primary_key=True)
+)
+
+
+class Meal(db.Model):
+    __tablename__ = 'meals'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String())
+    picture = db.Column(db.String())
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category = db.relationship('Category', back_populates='meals', uselist=False)
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(), nullable=False)
+    meals = db.relationship(Meal, back_populates='category')
+
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String())
+    mail = db.Column(db.String(), db.ForeignKey('users.mail'))
+    user = db.relationship('User')
+    phone = db.Column(db.String(), nullable=False)
+    address = db.Column(db.String(), nullable=False)
+    meals = db.relationship(Meal, secondary=orders_meals,
+                            backref=db.backref('orders'))
+
