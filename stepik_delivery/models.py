@@ -6,12 +6,13 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
     mail = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
 
 
-orders_meals = db.Table('orders_meals',
+orders_meals = db.Table(
+    'orders_meals',
     db.Column('meal_id', db.Integer, db.ForeignKey('meals.id')),
     db.Column('order_id', db.Integer, db.ForeignKey('orders.id'))
 )
@@ -50,4 +51,3 @@ class Order(db.Model):
     address = db.Column(db.String(), nullable=False)
     meals = db.relationship(Meal, secondary=orders_meals,
                             backref=db.backref('orders'))
-
