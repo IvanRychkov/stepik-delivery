@@ -5,7 +5,7 @@ from flask import render_template
 @app.route('/')
 def render_main():
     print(app.config)
-    return render_template('main.html')
+    return render_template('market/templates/main.html')
 
 
 @app.route('/admin/')

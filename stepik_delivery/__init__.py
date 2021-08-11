@@ -2,6 +2,7 @@ from flask import Flask
 
 from stepik_delivery.config import Config
 from stepik_delivery.models import db
+from stepik_delivery.market import market
 
 
 # Создание приложения
@@ -12,5 +13,6 @@ app.config.from_object(Config)
 # app.app_context().push()
 db.init_app(app)
 
-from stepik_delivery.views import *
+# from stepik_delivery.views import *
 
+app.register_blueprint(market)
