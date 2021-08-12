@@ -29,6 +29,9 @@ class Meal(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     category = db.relationship('Category', back_populates='meals')
 
+    def __repr__(self):
+        return self.title
+
 
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -36,6 +39,9 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
     meals = db.relationship(Meal, back_populates='category')
+
+    def __repr__(self):
+        return self.title
 
 
 class Order(db.Model):
