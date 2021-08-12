@@ -10,9 +10,10 @@ class Cart:
 
     def get_content(self):
         """Возвращает id объектов в корзине"""
-        if not self.session.get(self.CART, []):
-            self.session.permanent = True
-        return self.session.get(self.CART, [])
+        cart_items = session.get(self.CART, [])
+        if not cart_items:
+            session.permanent = True
+        return cart_items
 
     def get_meals(self):
         """Возвращает блюда из базы данных"""
@@ -25,16 +26,13 @@ class Cart:
             return
 
         temp_cart.append(product)
-        self.session[self.CART] = temp_cart
+        session[self.CART] = temp_cart
 
     def is_empty(self):
         return not self.get_content()
 
-    def __init__(self, session):
-        self.session = session
 
-
-cart = Cart(session)
+cart = Cart()
 
 
 @market.route('/')
@@ -52,7 +50,7 @@ def render_cart(meal_id=None):
         cart.add(meal_id)
         return redirect('/cart/')
 
-    return render_template('cart.html', cart=Cart(session))
+    return render_template('cart.html', cart=cart)
 
 
 @market.route('/ordered/')
