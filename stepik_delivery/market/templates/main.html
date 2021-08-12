@@ -13,27 +13,28 @@
                 <p class="pt-4">Доставка дронами</p>
             </div>
         </section>
-{#        В цикле#}
-    {% for cat in cats %}
-        <section>
-            <h3 class="my-4">{{ cat }}</h3>
-            <div class="row mt-4">
-        {% for meal in cat.meals %}
-                <div class="col-12 col-md-4">
-                    <div class="card mb-3">
-                        <img src=/static/pictures/{{ meal.picture }} width="300" height="200" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <h4 class="h5 card-title">{{ meal }}</h4>
-                            <p class="card-text">{{ meal.description }}</p>
-                            <a href="/cart/{{ meal.id }}/" class="btn btn-danger">В корзину</a>
-                        </div>
-                    </div>
+        {# В цикле #}
+        {% for cat in cats %}
+            <section>
+                <h3 class="my-4">{{ cat }}</h3>
+                <div class="row mt-4">
+                    {% for meal in cat.meals %}
+                        <div class="col-12 col-md-4">
+                            <div class="card mb-3">
+                                <img src=/static/pictures/{{ meal.picture }} width="300" height="200"
+                                     class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <h4 class="h5 card-title">{{ meal }}</h4>
+                                    <p class="card-text">{{ meal.description }}</p>
+                                    <a href="/cart/{{ meal.id }}/" class="btn btn-danger">В корзину</a>
+                                </div>
+                            </div>
 
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-            </div>
-        </section>
-    {% endfor %}
+            </section>
+        {% endfor %}
         <section>
             <h3 class="my-4">Стритфуд</h3>
             <div class="row mt-4">

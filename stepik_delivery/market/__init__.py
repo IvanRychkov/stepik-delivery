@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect, current_app
+from flask import Blueprint, render_template, session, redirect, request
 from stepik_delivery.models import Meal, Category
 
 market = Blueprint('market', __name__, template_folder='templates')
@@ -21,12 +21,16 @@ class Cart:
 
     def add(self, product):
         """Добавляет товар в корзину"""
-        temp_cart = self.get_content()
-        if product in temp_cart:
-            return
+        # temp_cart = self.get_content()
+        # if product in temp_cart:
+        #     return
+        #
+        # temp_cart.append(product)
+        session[self.CART].append(product)
+            # = temp_cart
 
-        temp_cart.append(product)
-        session[self.CART] = temp_cart
+    def remove(self, product):
+        session[self.CART].remove(product)
 
     def is_empty(self):
         return not self.get_content()
@@ -45,12 +49,20 @@ def render_main():
 
 @market.route('/cart/')
 @market.route('/cart/<int:meal_id>/')
+@market.route('/cart/remove/<int:meal_id>/')
+@market.route('/cart/removed/')
 def render_cart(meal_id=None):
     if meal_id:
-        cart.add(meal_id)
+        if '/remove/' in request.path:
+            cart.remove(meal_id)
+            return redirect('/cart/removed/')
+        else:
+            cart.add(meal_id)
         return redirect('/cart/')
 
-    return render_template('cart.html', cart=cart)
+    return render_template('cart.html',
+                           cart=cart,
+                           removed='removed' in request.path)
 
 
 @market.route('/ordered/')
