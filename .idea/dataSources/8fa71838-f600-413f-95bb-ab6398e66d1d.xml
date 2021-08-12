@@ -807,8 +807,13 @@ false Zulu
 13423||-9223372036854775808|U|G
 13423||10|U|G</Grants>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1722</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1862</IntrospectionStateNumber>
       <Current>1</Current>
+      <Relations>sequence|table|41510|41512|1
+sequence|table|41521|41523|1
+sequence|table|41534|41536|1
+sequence|table|41550|41552|1
+</Relations>
     </database>
     <database id="3" parent="1" name="postgres">
       <ObjectId>13707</ObjectId>
@@ -885,7 +890,7 @@ false Zulu
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1723</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1863</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="19" parent="2" name="plpgsql">
@@ -985,5 +990,345 @@ false Zulu
       <HandlerId>335</HandlerId>
       <Type>index</Type>
     </access-method>
+    <sequence id="31" parent="18" name="categories_id_seq">
+      <ObjectId>41510</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="32" parent="18" name="meals_id_seq">
+      <ObjectId>41534</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="33" parent="18" name="orders_id_seq">
+      <ObjectId>41550</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="34" parent="18" name="users_id_seq">
+      <ObjectId>41521</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <table id="35" parent="18" name="alembic_version">
+      <ObjectId>41505</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1860</StateNumber>
+    </table>
+    <table id="36" parent="18" name="categories">
+      <ObjectId>41512</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+    </table>
+    <table id="37" parent="18" name="meals">
+      <ObjectId>41536</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+    </table>
+    <table id="38" parent="18" name="orders">
+      <ObjectId>41552</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+    </table>
+    <table id="39" parent="18" name="orders_meals">
+      <ObjectId>41566</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+    </table>
+    <table id="40" parent="18" name="users">
+      <ObjectId>41523</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1861</StateNumber>
+    </table>
+    <column id="41" parent="35" name="version_num">
+      <Position>1</Position>
+      <DataType>varchar(32)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1860</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="42" parent="35" name="alembic_version_pkc">
+      <ObjectId>41508</ObjectId>
+      <StateNumber>1860</StateNumber>
+      <ColNames>version_num</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>100</CollationIds>
+      <CollationNames>default</CollationNames>
+      <ClassIds>3126</ClassIds>
+    </index>
+    <key id="43" parent="35" name="alembic_version_pkc">
+      <ObjectId>41509</ObjectId>
+      <StateNumber>1860</StateNumber>
+      <ColNames>version_num</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>alembic_version_pkc</UnderlyingIndexName>
+    </key>
+    <column id="44" parent="36" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <DefaultExpression>nextval(&apos;categories_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="45" parent="36" name="title">
+      <Position>2</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="46" parent="36" name="categories_pkey">
+      <ObjectId>41519</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="47" parent="36" name="categories_pkey">
+      <ObjectId>41520</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>categories_pkey</UnderlyingIndexName>
+    </key>
+    <column id="48" parent="37" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <DefaultExpression>nextval(&apos;meals_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="49" parent="37" name="title">
+      <Position>2</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="50" parent="37" name="price">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="51" parent="37" name="description">
+      <Position>4</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="52" parent="37" name="picture">
+      <Position>5</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="53" parent="37" name="category_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="54" parent="37" name="meals_pkey">
+      <ObjectId>41543</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="55" parent="37" name="meals_pkey">
+      <ObjectId>41544</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>meals_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="56" parent="37" name="meals_category_id_fkey">
+      <ObjectId>41545</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>category_id</ColNames>
+      <RefTableId>41512</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>categories</RefTableName>
+      <RefKeyName>categories_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="57" parent="38" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <DefaultExpression>nextval(&apos;orders_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="58" parent="38" name="date">
+      <Position>2</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="59" parent="38" name="amount">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="60" parent="38" name="status">
+      <Position>4</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="61" parent="38" name="mail">
+      <Position>5</Position>
+      <DataType>varchar|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="62" parent="38" name="phone">
+      <Position>6</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="63" parent="38" name="address">
+      <Position>7</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="64" parent="38" name="orders_pkey">
+      <ObjectId>41559</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="65" parent="38" name="orders_pkey">
+      <ObjectId>41560</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>orders_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="66" parent="38" name="orders_mail_fkey">
+      <ObjectId>41561</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>mail</ColNames>
+      <RefTableId>41523</RefTableId>
+      <RefColPositions>2</RefColPositions>
+      <RefTableName>users</RefTableName>
+      <RefKeyName>users_mail_key</RefKeyName>
+      <RefColNames>mail</RefColNames>
+    </foreign-key>
+    <column id="67" parent="39" name="meal_id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="68" parent="39" name="order_id">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1861</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <foreign-key id="69" parent="39" name="orders_meals_meal_id_fkey">
+      <ObjectId>41569</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>meal_id</ColNames>
+      <RefTableId>41536</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>meals</RefTableName>
+      <RefKeyName>meals_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="70" parent="39" name="orders_meals_order_id_fkey">
+      <ObjectId>41574</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>order_id</ColNames>
+      <RefTableId>41552</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>orders</RefTableName>
+      <RefKeyName>orders_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="71" parent="40" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="72" parent="40" name="mail">
+      <Position>2</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="73" parent="40" name="password">
+      <Position>3</Position>
+      <DataType>varchar(128)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1861</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="74" parent="40" name="users_pkey">
+      <ObjectId>41530</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <index id="75" parent="40" name="users_mail_key">
+      <ObjectId>41532</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>mail</ColNames>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>100</CollationIds>
+      <CollationNames>default</CollationNames>
+      <ClassIds>3126</ClassIds>
+    </index>
+    <key id="76" parent="40" name="users_pkey">
+      <ObjectId>41531</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
+    </key>
+    <key id="77" parent="40" name="users_mail_key">
+      <ObjectId>41533</ObjectId>
+      <StateNumber>1861</StateNumber>
+      <ColNames>mail</ColNames>
+      <UnderlyingIndexName>users_mail_key</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

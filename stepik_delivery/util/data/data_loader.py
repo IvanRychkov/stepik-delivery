@@ -3,28 +3,28 @@ import os
 import pandas as pd
 from sqlalchemy.exc import IntegrityError
 
-from stepik_delivery.models import db
+from stepik_delivery.models import db, Meal, Category
 
 DATA_PATH = 'stepik_delivery/util/data/'
 
 
-def load_csv(data, tablename):
+def load_csv(filename, model):
     """Загружает датафрейм pandas в таблицу через SQLAlchemy."""
     try:
-        # Пробуем загрузить данные в таблицу
-        data.to_sql(tablename, con=db.engine, if_exists='append')
+        # Считаем файл
+        for i, row in pd.read_csv(os.path.join(DATA_PATH, filename)).iterrows():
+            db.session.add(model(**row.to_dict()))
+            # print(row.to_dict())
         db.session.commit()
     except:
-        # Если нарушен констрейнт уникальности, отменяем операцию
+        # Если ошибка, отменяем операцию
         db.session.rollback()
 
 
 def load_data():
     # Считываем csv
-    meals = pd.read_csv(os.path.join(DATA_PATH, 'delivery_items.csv'), index_col=0)
-    categories = pd.read_csv(os.path.join(DATA_PATH, 'delivery_categories.csv'), index_col=0)
-
-    # Загружвем в базу
-    for table, name in zip([meals, categories],
-                           ['meals', 'categories']):
-        load_csv(table, name)
+    for file, model in zip(['delivery_items.csv', 'delivery_categories.csv'],
+                           [Meal, Category]):
+        print('loading', file)
+        # Загружвем в базу
+        load_csv(file, model)
