@@ -65,7 +65,7 @@ def render_cart(meal_id=None):
                            removed='removed' in request.path)
 
 
-@market.route('/ordered/')
+@market.route('/ordered/', methods=['POST'])
 def render_ordered():
     """Добавить заказ в базу данных"""
     return render_template('ordered.html')
