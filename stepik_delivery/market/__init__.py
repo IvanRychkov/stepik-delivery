@@ -9,7 +9,12 @@ class Cart:
     CART = 'cart'
 
     def get_content(self):
+        """Возвращает id объектов в корзине"""
         return session.get(self.CART, [])
+
+    def get_meals(self):
+        """Возвращает блюда из базы данных"""
+        return [*map(Meal.query.get, self.get_content())]
 
     def add(self, product):
         """Добавляет товар в корзину"""
@@ -42,8 +47,7 @@ def render_cart(meal_id=None):
         return redirect('/cart/')
 
     if cart.get_content():
-        meals = Meal.query.filter(Meal.id.in_(cart.get_content())).all()
-        return render_template('cart.html', meals=meals)
+        return render_template('cart.html', cart=cart)
 
 
 @market.route('/ordered/')

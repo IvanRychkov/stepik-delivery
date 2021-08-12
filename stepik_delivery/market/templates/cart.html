@@ -3,7 +3,6 @@
 {% block body %}
     <main class="container">
         <h1 class="h3 my-4">Корзина</h1>
-
         <div class="alert alert-warning" role="alert">Блюдо удалено из корзины</div>
         <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="/login.html">войдите</a> или <a
                 href="/register.html">зарегистрируйтесь</a></div>
@@ -50,6 +49,8 @@
                 <h4 class="mb-3 col-7 mb-5">3 блюда в корзине</h4>
                 <table class="table">
                     <tbody>
+                    {# Задаём переменную со списком блюд, чтобы не использовать её дважды #}
+                    {% set meals = cart.get_meals() %}
                     {% for meal in meals %}
                         <tr>
                             <th scope="row">{{ meal.title }}</th>
