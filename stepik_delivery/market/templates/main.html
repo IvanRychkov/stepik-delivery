@@ -15,24 +15,26 @@
             </div>
         </section>
 {#        В цикле#}
+    {% for cat in cats %}
         <section>
-            <h3 class="my-4">Суши</h3>
+            <h3 class="my-4">{{ cat }}</h3>
             <div class="row mt-4">
+        {% for meal in cat.meals %}
                 <div class="col-12 col-md-4">
                     <div class="card mb-3">
-                        <img src=https://place-hold.it/300x200 width="300" height="200" class="card-img-top" alt="">
+                        <img src=/static/pictures/{{ meal.picture }} width="300" height="200" class="card-img-top" alt="">
                         <div class="card-body">
-                            <h4 class="h5 card-title">Ролл Тьюринг</h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                card's content.</p>
-                            <a href="/addtocart1/" class="btn btn-danger">В корзину</a>
+                            <h4 class="h5 card-title">{{ meal }}</h4>
+                            <p class="card-text">{{ meal.description }}</p>
+                            <a href="/cart/{{ meal.id }}/" class="btn btn-danger">В корзину</a>
                         </div>
                     </div>
+
                 </div>
+            {% endfor %}
             </div>
         </section>
-
+    {% endfor %}
         <section>
             <h3 class="my-4">Стритфуд</h3>
             <div class="row mt-4">

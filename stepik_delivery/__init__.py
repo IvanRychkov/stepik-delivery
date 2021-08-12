@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -20,16 +20,14 @@ with app.app_context():
     # Подключаем миграции
     migrate = Migrate(app, db)
 
-    # Админка
-    admin = Admin(app)
-    admin.add_view(ModelView(Meal, db.session))
-
-    # from stepik_delivery.views import *
-
-    # Подключаем модули-блюпринты
-    app.register_blueprint(market)
-    app.register_blueprint(auth)
-
-
     # Загружаем данные блюд и их категорий
     load_data()
+
+    # Админка
+    admin = Admin(app)
+    # Добавим экран работы с блюдами
+    admin.add_view(ModelView(Meal, db.session))
+
+    # Подключаем блюпринты
+    app.register_blueprint(market)
+    app.register_blueprint(auth)
