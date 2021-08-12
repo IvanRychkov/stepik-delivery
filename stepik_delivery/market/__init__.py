@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect
+from flask import Blueprint, render_template, session, redirect, current_app
 from stepik_delivery.models import Meal, Category
 
 market = Blueprint('market', __name__, template_folder='templates')
@@ -10,7 +10,9 @@ class Cart:
 
     def get_content(self):
         """Возвращает id объектов в корзине"""
-        return session.get(self.CART, [])
+        if not self.session.get(self.CART, []):
+            self.session.permanent = True
+        return self.session.get(self.CART, [])
 
     def get_meals(self):
         """Возвращает блюда из базы данных"""
@@ -23,20 +25,24 @@ class Cart:
             return
 
         temp_cart.append(product)
-        session[self.CART] = temp_cart
+        self.session[self.CART] = temp_cart
 
     def is_empty(self):
         return not self.get_content()
 
+    def __init__(self, session):
+        self.session = session
 
-cart = Cart()
+
+cart = Cart(session)
 
 
 @market.route('/')
 def render_main():
     cats = Category.query.all()
     return render_template('main.html',
-                           cats=cats)
+                           cats=cats,
+                           cart=cart)
 
 
 @market.route('/cart/')
@@ -46,8 +52,7 @@ def render_cart(meal_id=None):
         cart.add(meal_id)
         return redirect('/cart/')
 
-    if cart.get_content():
-        return render_template('cart.html', cart=cart)
+    return render_template('cart.html', cart=Cart(session))
 
 
 @market.route('/ordered/')

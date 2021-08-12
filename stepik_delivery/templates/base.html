@@ -34,7 +34,10 @@
 </head>
 
 <body class="my-4 py-4">
-
+{% if cart and cart.get_content() %} {# Если есть корзина, грузим её из базы #}
+    {% set meals = cart.get_meals() %}
+{% endif %}
+{{ cart.get_content() }}
 {% block body %}{% endblock %}
 
 </body>
