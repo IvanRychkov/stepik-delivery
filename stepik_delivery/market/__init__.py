@@ -2,7 +2,8 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, session, redirect, request
 
-from stepik_delivery.models import db, Meal, Category, Order
+from stepik_delivery.models import Meal, Category
+from stepik_delivery.auth import account
 
 market = Blueprint('market', __name__, template_folder='templates')
 
@@ -75,4 +76,6 @@ def render_cart(meal_id=None):
 @market.route('/ordered/', methods=['POST'])
 def render_ordered():
     """Добавляет заказ в базу данных."""
+    account.login()
+    # account.logout()
     return render_template('ordered.html')
