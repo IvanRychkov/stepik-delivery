@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from flask import Blueprint, render_template, session, redirect, request
-from stepik_delivery.models import Meal, Category
+
+from stepik_delivery.models import db, Meal, Category, Order
 
 market = Blueprint('market', __name__, template_folder='templates')
 
@@ -27,13 +30,17 @@ class Cart:
         #
         # temp_cart.append(product)
         session[self.CART].append(product)
-            # = temp_cart
+        # = temp_cart
 
     def remove(self, product):
         session[self.CART].remove(product)
 
     def is_empty(self):
         return not self.get_content()
+
+    @staticmethod
+    def reset():
+        session.pop('cart')
 
 
 cart = Cart()
@@ -67,5 +74,5 @@ def render_cart(meal_id=None):
 
 @market.route('/ordered/', methods=['POST'])
 def render_ordered():
-    """Добавить заказ в базу данных"""
+    """Добавляет заказ в базу данных."""
     return render_template('ordered.html')

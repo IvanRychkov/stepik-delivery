@@ -51,7 +51,7 @@ class Order(db.Model):
     date = db.Column(db.DateTime, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String())
-    mail = db.Column(db.String(), db.ForeignKey('users.mail'))
+    mail = db.Column(db.String(), db.ForeignKey('users.mail'), nullable=False)
     user = db.relationship('User', backref=db.backref('orders'))
     phone = db.Column(db.String(), nullable=False)
     address = db.Column(db.String(), nullable=False)
