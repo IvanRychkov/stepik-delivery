@@ -6,9 +6,10 @@
         {% if removed %}
             <div class="alert alert-warning" role="alert">Блюдо удалено из корзины</div>
         {% endif %}
-        <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="/login/">войдите</a> или <a
+        {% if not session.logged_in %}
+        <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="/auth/">войдите</a> или <a
                 href="/register/">зарегистрируйтесь</a></div>
-
+        {% endif %}
         <div class="row mt-5">
 
             <div class="col-4">

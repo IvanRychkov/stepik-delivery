@@ -25,11 +25,6 @@ class Cart:
 
     def add(self, product):
         """Добавляет товар в корзину"""
-        # temp_cart = self.get_content()
-        # if product in temp_cart:
-        #     return
-        #
-        # temp_cart.append(product)
         session[self.CART].append(product)
         # = temp_cart
 

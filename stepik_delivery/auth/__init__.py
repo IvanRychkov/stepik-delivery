@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, redirect
+from stepik_delivery.forms import AuthForm
 
 #
 auth = Blueprint('auth', __name__, template_folder='templates')
@@ -27,7 +28,9 @@ def render_account():
 
 @auth.route('/auth/')
 def render_auth():
-    return render_template('auth.html')
+    form = AuthForm()
+    return render_template('auth.html',
+                           form=form)
 
 
 @auth.route('/register/')
@@ -35,11 +38,16 @@ def render_ordered():
     return render_template('register.html')
 
 
-@auth.route('/login/')
+@auth.route('/login/', methods=['POST'])
 def render_login():
-    return render_template('login.html')
+    form = AuthForm()
+    account.login()
+    print(form.email.data, form.password.data)
+
+    return render_template('account.html')
 
 
 @auth.route('/logout/')
 def render_logout():
-    return render_template('auth.html')
+    account.logout()
+    return redirect('/auth/')
