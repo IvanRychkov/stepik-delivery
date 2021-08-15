@@ -25,6 +25,8 @@ class Cart:
 
     def add(self, product):
         """Добавляет товар в корзину"""
+        if self.is_empty():
+            session[self.CART] = []
         session[self.CART].append(product)
         # = temp_cart
 

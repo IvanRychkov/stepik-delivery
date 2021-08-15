@@ -6,7 +6,7 @@ from flask_admin.contrib.sqla import ModelView
 from stepik_delivery.auth import auth
 from stepik_delivery.config import Config
 from stepik_delivery.market import market
-from stepik_delivery.models import db, Meal
+from stepik_delivery.models import db, Meal, User, Order
 from stepik_delivery.util.data import load_data
 
 # Создание приложения
@@ -26,8 +26,9 @@ with app.app_context():
 
     # Админка
     admin = Admin(app)
-    # Добавим экран работы с блюдами
-    admin.add_view(ModelView(Meal, db.session))
+    # Добавим экраны работы с данными
+    for model in Meal, User, Order:
+        admin.add_view(ModelView(model, db.session))
 
     # Подключаем блюпринты
     app.register_blueprint(market)
