@@ -1,5 +1,5 @@
 from flask import session
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from stepik_delivery.models import db, Meal, User
 
@@ -8,17 +8,30 @@ class Account:
     LOGGED_IN = 'logged_in'
 
     def is_logged(self):
+        """Проверяет наличие в сессии залогиненного пользователя."""
         return session.get(self.LOGGED_IN)
 
-    def login(self, user):
-        session[self.LOGGED_IN] = user
+    def set_active_user(self, email):
+        """Задаёт в сессии активного пользователя."""
+        session[self.LOGGED_IN] = email
+
+    def login(self, form):
+        print('attempting login as', form.email.data)
+        # Если юзер существует, и пароль верный:
+        if form.validate_on_submit():
+            # Логиним пользователя в сессию
+            self.set_active_user(form.email.data)
+            return User.query.filter(User.mail == form.email.data).first()
 
     def logout(self):
-        session.pop(self.LOGGED_IN)
+        """Удаляет пользователя из сессии."""
+        return session.pop(self.LOGGED_IN)
 
-    def register(self, form):
+    def register(self, form) -> User:
+        """Добавляет пользователя в базу данных из формы."""
         try:
             if form.validate_on_submit():
+                # Создаём пользователя
                 new_user = User(
                     mail=form.email.data,
                     password=generate_password_hash(
@@ -28,7 +41,9 @@ class Account:
                 db.session.add(new_user)
                 db.session.commit()
                 print('user added')
-                self.login(form.email.data)
+                # Логиним
+                self.set_active_user(new_user.mail)
+                return new_user
         except:
             print('user exists')
             db.session.rollback()
@@ -64,4 +79,4 @@ class Cart:
 
     @staticmethod
     def reset():
-        session.pop('cart')
+        return session.pop('cart')

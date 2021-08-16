@@ -12,18 +12,18 @@
                         <p class="h5 font-weight-light">Создайте аккаунт</p>
                     </div>
                     <div class="mt-5 form-label-group">
-{#                        <p class="text-muted">Электропочта</p>#}
                         {{ form.email.label(class_='text-muted') }}
                         {{ form.email(class_='form-control', autofocus=True) }}
-{#                        <input type="email" id="inputEmail" class="form-control" required autofocus>#}
-{#                        <label for="inputEmail"></label>#}
+                        {% for err in form.email.errors %}
+                            <p class='text-danger'>{{ err }}</p>
+                        {% endfor %}
                     </div>
                     <div class="form-label-group">
-{#                        <p class="text-muted"> Пароль</p>#}
                         {{ form.password.label(class_='text-muted') }}
                         {{ form.password(class_='form-control') }}
-{#                        <input type="password" id="inputPassword" class="form-control" required>#}
-{#                        <label for="inputPassword"></label>#}
+                        {% for err in form.password.errors %}
+                            <p class='text-danger'>{{ err }}</p>
+                        {% endfor %}
                         {{ form.csrf_token }}
                     </div>
                     <div class="checkbox mb-3"></div>
