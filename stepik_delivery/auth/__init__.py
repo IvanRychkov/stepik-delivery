@@ -1,31 +1,14 @@
 from flask import Blueprint, render_template, session, redirect, request
 from stepik_delivery.forms import AuthForm, RegisterForm
-from stepik_delivery.models import db, User
-from werkzeug.security import generate_password_hash, check_password_hash
+from stepik_delivery.util import account, cart
 
-#
 auth = Blueprint('auth', __name__, template_folder='templates')
-
-
-class Account:
-    LOGGED_IN = 'logged_in'
-
-    def is_logged(self):
-        return session.get(self.LOGGED_IN)
-
-    def login(self):
-        session[self.LOGGED_IN] = True
-
-    def logout(self):
-        session.pop(self.LOGGED_IN)
-
-
-account = Account()
 
 
 @auth.route('/account/')
 def render_account():
-    return render_template('account.html')
+    return render_template('account.html',
+                           cart=cart)
 
 
 @auth.route('/auth/')
@@ -37,25 +20,24 @@ def render_auth():
 
 @auth.route('/register/', methods=['GET', 'POST'])
 def render_ordered():
+    # Если пользователь залогинен, сразу отправляем в ЛК
+    if account.is_logged():
+        return redirect('/account/')
+
     # Создаём/заполняем форму
     form = RegisterForm()
 
+    # Если выполняем регистрацию
     if request.method == 'POST':
-        # Если выполняем регистрацию
-        try:
-            # if form.validate_on_submit():
-            new_user = User(
-                mail=form.email.data,
-                password=generate_password_hash(
-                    form.password.data
-                )
-            )
-            db.session.add(new_user)
-            print('user added')
-            db.session.commit()
+        # Аккаунт пробует зарегистрироваться в базе
+        account.register(form)
+
+        # Проверяем регистрацию
+        if account.is_logged():
+            # Направляем пользователя в личный кабинет
             return redirect('/account/')
-        except:
-            db.session.rollback()
+        else:
+            return redirect('/register/')
 
     return render_template('register.html',
                            form=form)
@@ -64,7 +46,7 @@ def render_ordered():
 @auth.route('/login/', methods=['POST'])
 def render_login():
     form = AuthForm()
-    account.login()
+    account.login(form.email.data)
 
     return render_template('account.html')
 

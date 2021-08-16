@@ -24,6 +24,7 @@
                         {{ form.password(class_='form-control') }}
 {#                        <input type="password" id="inputPassword" class="form-control" required>#}
 {#                        <label for="inputPassword"></label>#}
+                        {{ form.csrf_token }}
                     </div>
                     <div class="checkbox mb-3"></div>
                     <button class="btn btn-lg btn-danger btn-block" type="submit">Зарегистрироваться</button>

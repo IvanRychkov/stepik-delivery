@@ -35,7 +35,7 @@
 
 <body class="my-4 py-4">
 {# Если есть корзина, грузим её из базы один раз #}
-{% if cart and cart.get_content() %}
+{% if cart and not cart.is_empty() %}
     {% set meals = cart.get_meals() %}
 {% endif %}
 

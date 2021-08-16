@@ -2,46 +2,10 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, session, redirect, request
 
-from stepik_delivery.models import Meal, Category
-from stepik_delivery.auth import account
+from stepik_delivery.models import Category
+from stepik_delivery.util import account, cart
 
 market = Blueprint('market', __name__, template_folder='templates')
-
-
-class Cart:
-    """Интерфейс для взаимодействия с корзиной в сессии"""
-    CART = 'cart'
-
-    def get_content(self):
-        """Возвращает id объектов в корзине"""
-        cart_items = session.get(self.CART, [])
-        if not cart_items:
-            session.permanent = True
-        return cart_items
-
-    def get_meals(self):
-        """Возвращает блюда из базы данных"""
-        return [*map(Meal.query.get, self.get_content())]
-
-    def add(self, product):
-        """Добавляет товар в корзину"""
-        if self.is_empty():
-            session[self.CART] = []
-        session[self.CART].append(product)
-        # = temp_cart
-
-    def remove(self, product):
-        session[self.CART].remove(product)
-
-    def is_empty(self):
-        return not self.get_content()
-
-    @staticmethod
-    def reset():
-        session.pop('cart')
-
-
-cart = Cart()
 
 
 @market.route('/')
