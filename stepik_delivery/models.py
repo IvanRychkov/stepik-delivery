@@ -38,7 +38,7 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
-    meals = db.relationship(Meal, back_populates='category')
+    meals = db.relationship('Meal', back_populates='category')
 
     def __repr__(self):
         return self.title
@@ -55,5 +55,5 @@ class Order(db.Model):
     user = db.relationship('User', backref=db.backref('orders'))
     phone = db.Column(db.String(), nullable=False)
     address = db.Column(db.String(), nullable=False)
-    meals = db.relationship(Meal, secondary=orders_meals,
+    meals = db.relationship('Meal', secondary=orders_meals,
                             backref=db.backref('orders'))

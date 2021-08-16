@@ -7,7 +7,7 @@ from stepik_delivery.models import db, Meal, User
 class Account:
     LOGGED_IN = 'logged_in'
 
-    def is_logged(self):
+    def current_user(self):
         """Проверяет наличие в сессии залогиненного пользователя."""
         return session.get(self.LOGGED_IN)
 
@@ -79,4 +79,5 @@ class Cart:
 
     @staticmethod
     def reset():
+        """Очищает корзину."""
         return session.pop('cart')

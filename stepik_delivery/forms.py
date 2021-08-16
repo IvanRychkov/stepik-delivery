@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from werkzeug.security import check_password_hash
-from wtforms.fields import PasswordField
-from wtforms.fields.html5 import EmailField
+from wtforms.fields import PasswordField, TextField
+from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import InputRequired, Length, ValidationError, StopValidation
 
 from stepik_delivery.models import User
@@ -44,4 +44,7 @@ class RegisterForm(AuthForm):
 
 
 class OrderForm(FlaskForm):
-    pass
+    name = TextField('Ваше имя', [InputRequired()])
+    address = TextField('Адрес', [InputRequired()])
+    email = EmailField('Электропочта', [InputRequired()])
+    phone = TelField('Телефон', [InputRequired()])

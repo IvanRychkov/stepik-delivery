@@ -7,7 +7,7 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 
 @auth.route('/account/')
 def render_account():
-    if not account.is_logged():
+    if not account.current_user():
         return redirect('/auth/')
     return render_template('account.html',
                            cart=cart)
@@ -15,11 +15,12 @@ def render_account():
 
 @auth.route('/auth/', methods=['GET', 'POST'])
 def render_auth():
-    # Если пользователь чудом попал на страницу логина
+    # Если пользователь чудом попал на страницу логина,
     # Сразу его перебрасываем в аккаунт
-    if account.is_logged():
+    if account.current_user():
         return redirect('/account/')
 
+    # Создаём/заполняем форму
     form = AuthForm()
 
     # Если POST
@@ -28,6 +29,7 @@ def render_auth():
         if account.login(form):
             # В случае успеха
             return redirect('/account/')
+
     return render_template('auth.html',
                            form=form)
 
@@ -35,7 +37,7 @@ def render_auth():
 @auth.route('/register/', methods=['GET', 'POST'])
 def render_ordered():
     # Если пользователь залогинен, сразу отправляем в ЛК
-    if account.is_logged():
+    if account.current_user():
         return redirect('/account/')
 
     # Создаём/заполняем форму
@@ -48,7 +50,7 @@ def render_ordered():
             account.register(form)
 
             # Проверяем регистрацию
-            if account.is_logged():
+            if account.current_user():
                 # Направляем пользователя в личный кабинет
                 return redirect('/account/')
             return redirect('/register/')
