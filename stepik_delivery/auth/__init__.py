@@ -10,7 +10,8 @@ def render_account():
     if not account.current_user():
         return redirect('/auth/')
     return render_template('account.html',
-                           cart=cart)
+                           cart=cart,
+                           account=account)
 
 
 @auth.route('/auth/', methods=['GET', 'POST'])

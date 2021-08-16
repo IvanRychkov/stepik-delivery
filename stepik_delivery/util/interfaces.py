@@ -1,7 +1,7 @@
 from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from stepik_delivery.models import db, Meal, User
+from stepik_delivery.models import db, Meal, User, Order
 
 
 class Account:
@@ -10,6 +10,12 @@ class Account:
     def current_user(self):
         """Проверяет наличие в сессии залогиненного пользователя."""
         return session.get(self.LOGGED_IN)
+
+    def query_current_user(self):
+        """Получает текущего пользователя из базы данных."""
+        return User.query.filter(
+            User.mail == self.current_user()
+        ).first()
 
     def set_active_user(self, email):
         """Задаёт в сессии активного пользователя."""
@@ -21,7 +27,7 @@ class Account:
         if form.validate_on_submit():
             # Логиним пользователя в сессию
             self.set_active_user(form.email.data)
-            return User.query.filter(User.mail == form.email.data).first()
+            return self.query_current_user()
 
     def logout(self):
         """Удаляет пользователя из сессии."""
