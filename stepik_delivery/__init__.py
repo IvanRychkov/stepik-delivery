@@ -1,4 +1,6 @@
-from flask import Flask, session
+import os
+
+from flask import Flask
 from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -12,7 +14,7 @@ from stepik_delivery.util.data import load_data
 # Создание приложения
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = '1341'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 # Инициализация базы данных
 with app.app_context():
