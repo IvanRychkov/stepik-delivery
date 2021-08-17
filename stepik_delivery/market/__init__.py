@@ -46,21 +46,33 @@ def render_ordered():
     # Создаём форму из POST-запроса
     form = OrderForm()
 
-    # Создаём объект заказа в базе данных
-    meals = cart.get_meals()
-    new_order = Order(date=datetime.now(),
-                      amount=sum(map(lambda m: m.price,
-                                     meals)),
-                      status='in progress',
-                      mail=form.email.data,
-                      phone=form.phone.data,
-                      address=form.address.data,
-                      meals=meals
-                      )
-    print(new_order.meals)
-    db.session.add(new_order)
-    db.session.commit()
-
-    cart.reset()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # Создаём объект заказа в базе данных
+            meals = cart.get_meals()
+            new_order = Order(date=datetime.now(),
+                              amount=sum(map(lambda m: m.price,
+                                             meals)),
+                              status='in progress',
+                              mail=form.email.data,
+                              phone=form.phone.data,
+                              address=form.address.data,
+                              meals=meals
+                              )
+            print(new_order.meals)
+            db.session.add(new_order)
+            db.session.commit()
+            cart.reset()
+            return render_template('ordered.html',
+                                   account=account)
+        return render_template('cart.html',
+                               form=form,
+                               cart=cart,
+                               account=account)
     return render_template('ordered.html',
-                           account=account)
+                           cart=cart)
+
+
+
+
+

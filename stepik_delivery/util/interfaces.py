@@ -83,7 +83,7 @@ class Cart:
     def is_empty(self):
         return not self.get_content()
 
-    @staticmethod
-    def reset():
+    def reset(self):
         """Очищает корзину."""
-        return session.pop('cart')
+        if not self.is_empty():
+            return session.pop('cart')

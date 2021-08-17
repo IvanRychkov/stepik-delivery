@@ -7,6 +7,7 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 
 @auth.route('/account/')
 def render_account():
+    # Если не залогинен, то отправляем логиниться
     if not account.current_user():
         return redirect('/auth/')
     return render_template('account.html',
