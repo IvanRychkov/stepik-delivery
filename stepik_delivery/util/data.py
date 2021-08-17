@@ -1,7 +1,6 @@
 import os
 
 import pandas as pd
-from sqlalchemy.exc import IntegrityError
 
 from stepik_delivery.models import db, Meal, Category
 
@@ -14,8 +13,8 @@ def load_csv(filename, model):
         # Считаем файл
         for i, row in pd.read_csv(os.path.join(DATA_PATH, filename)).iterrows():
             db.session.add(model(**row.to_dict()))
-            # print(row.to_dict())
         db.session.commit()
+
     except:
         # Если ошибка, отменяем операцию
         db.session.rollback()
@@ -26,5 +25,5 @@ def load_data():
     for file, model in zip(['delivery_items.csv', 'delivery_categories.csv'],
                            [Meal, Category]):
         print('loading', file)
-        # Загружвем в базу
+        # Загружаем в базу
         load_csv(file, model)
