@@ -1,1 +1,1 @@
-web: run:app --log-file -
+web: app:app --log-file -
