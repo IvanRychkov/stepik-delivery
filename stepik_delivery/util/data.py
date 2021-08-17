@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from stepik_delivery.models import db, Meal, Category
 
-DATA_PATH = 'stepik_delivery/util/data/'
+DATA_PATH = 'stepik_delivery/util/'
 
 
 def load_csv(filename, model):
