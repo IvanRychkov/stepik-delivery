@@ -1,4 +1,5 @@
-# Иван Рычков - stepik_delivery.
+# Иван Рычков - stepik_delivery
+https://stepik-delivery-ivanrychkov.herokuapp.com
 
 Финальный проект курса "Flask с нуля".
 
